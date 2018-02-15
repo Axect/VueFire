@@ -97,6 +97,7 @@ package.json
 src
 static
 ```
+
 	* We only focused on `src` directory
 
 * `src` Structure
