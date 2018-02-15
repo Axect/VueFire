@@ -52,9 +52,9 @@ $ npm install --save firebase
 ```
 
 * Connect [Firebase Console](https://console.firebase.google.com/)
-	* New Project
-	* Add Firebase at Web app
-	* Copy Code and paste to `src/main.js`
+  * New Project
+  * Add Firebase at Web app
+  * Copy Code and paste to `src/main.js`
 
 ```javascript
 import Vue from 'vue'
@@ -78,10 +78,10 @@ let config = {
 firebase.initializeApp(config);
 
 new Vue({
-	el: '#app',
-	router,
-	template: '<App/>',
-	components: { App }
+  el: '#app',
+  router,
+  template: '<App/>',
+  components: { App }
 })
 ```
 
@@ -131,43 +131,43 @@ import firebase from 'firebase'
 Vue.use(Router)
 
 let router = new Router({
-	routes: [
-		{
-			path: '*',
-			redirect: '/login'
-		},
-		{
-			path: '/',
-			redirect: '/login'
-		},
-		{
-			path: '/login',
-			name: 'Login',
-			component: Login
-		},
-		{
-			path: '/sign-up',
-			name: 'SignUp',
-			component: SignUp
-		},
-		{
-			path: '/hello',
-			name: 'HelloWorld',
-			component: HelloWorld,
-			meta: {
-				requiresAuth: true
-			}
-		}
-	]
+  routes: [
+    {
+      path: '*',
+      redirect: '/login'
+    },
+    {
+      path: '/',
+      redirect: '/login'
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/sign-up',
+      name: 'SignUp',
+      component: SignUp
+    },
+    {
+      path: '/hello',
+      name: 'HelloWorld',
+      component: HelloWorld,
+      meta: {
+        requiresAuth: true
+      }
+    }
+  ]
 })
 
 router.beforeEach((to, from, next) => {
-	let currentUser = firebase.auth().currentUser;
-	let requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  let currentUser = firebase.auth().currentUser;
+  let requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-	if (requiresAuth && !currentUser) next('login')
-	else if (!requiresAuth && currentUser) next('hello')
-	else next()
+  if (requiresAuth && !currentUser) next('login')
+  else if (!requiresAuth && currentUser) next('hello')
+  else next()
 })
 ```
 
@@ -186,39 +186,39 @@ router.beforeEach((to, from, next) => {
 * In `src/component/`, create `Login.vue`
 ```vue
 <template>
-	<div class="login">
-		<h3>Sign In</h3>
-		<input type="text" v-model="email" placeholder="Email"><br>
-		<input type="password" v-model="password" placeholder="Password"><br>
-		<button v-on:click="signIn">Connection</button>
-		<p>You don't have an account? You can <router-link to="/sign-up">create one</router-link></p>
-	</div>
+  <div class="login">
+    <h3>Sign In</h3>
+    <input type="text" v-model="email" placeholder="Email"><br>
+    <input type="password" v-model="password" placeholder="Password"><br>
+    <button v-on:click="signIn">Connection</button>
+    <p>You don't have an account? You can <router-link to="/sign-up">create one</router-link></p>
+  </div>
 </template>
 
 <script>
-	import firebase from 'firebase'
+  import firebase from 'firebase'
 
-	export default {
-		name: 'login',
-		data: function() {
-			return {
-				email: '',
-				password: ''
-			}
-		},
-		methods: {
-			signIn: function() {
-				firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
-					(user) => {
-						this.$router.replace('hello')
-					},
-					(err) => {
-						alert('Oops. ' + err.message)
-					}
-				);
-			}
-		}
-	}
+  export default {
+    name: 'login',
+    data: function() {
+      return {
+        email: '',
+        password: ''
+      }
+    },
+    methods: {
+      signIn: function() {
+        firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
+          (user) => {
+            this.$router.replace('hello')
+          },
+          (err) => {
+            alert('Oops. ' + err.message)
+          }
+        );
+      }
+    }
+  }
 </script>
 
 <style scoped> /* "scoped" attribute limit the CSS to this component only */
