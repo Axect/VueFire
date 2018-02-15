@@ -98,7 +98,7 @@ src
 static
 ```
 
-	* We only focused on `src` directory
+> We only focused on `src` directory
 
 * `src` Structure
 ```bash
