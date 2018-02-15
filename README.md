@@ -252,5 +252,64 @@ router.beforeEach((to, from, next) => {
 > * `v-on:click="signIn"`: If click, then execute `signIn` function
 > * `router-link to="/sign-up"`: If click, then move to sign-up page
 > * `this.$router.replace('hello')`: Move to `hello` page
-> * `stype scoped`: Only use this style to this component
+> * `style scoped`: Only use this style to this component
 
+* In `src/components`, create `SignUp.vue`
+```vue
+<template>
+  <div class="sign-up">
+    <p>Let's create a new account!</p>
+    <input type="text" v-model="email" placeholder="Email"><br>
+    <input type="password" v-model="password" placeholder="Password"><br>
+    <button v-on:click="signUp">Sign Up</button>
+    <span>or go back to <router-link to="/login">login</router-link>.</span>
+  </div>
+</template>
+
+<script>
+  import firebase from 'firebase'
+
+  export default {
+    name: 'signUp',
+    data: function() {
+      return {
+        email: '',
+        password: ''
+      }
+    },
+    methods: {
+      signUp: function() {
+        firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
+          function (user) {
+            this.$router.replace('hello')
+          },
+          function (err) {
+            alert('Oops, ' + err.message)
+          }
+        );
+      }
+    }
+  }
+</script>
+
+<style scoped> /* "scoped" attribute limit the CSS to this component only */
+  .signUp {
+    margin-top: 40px;
+  }
+  input {
+    margin: 10px 0;
+    width: 20%;
+    padding: 15px;
+  }
+  button {
+    margin-top: 10px;
+    width: 10%;
+    cursor: pointer;
+  }
+  span {
+    display: block;
+    margin-top: 20px;
+    font-size: 11px
+  }
+</style>
+```
