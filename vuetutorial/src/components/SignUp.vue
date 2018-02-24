@@ -22,10 +22,10 @@
     methods: {
       signUp: function() {
         firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
-          function (user) {
+          (user) => {
             this.$router.replace('hello')
           },
-          function (err) {
+          (err) => {
             alert('Oops, ' + err.message)
           }
         );
